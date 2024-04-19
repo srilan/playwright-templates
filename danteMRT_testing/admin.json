@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://d-mrt-fe.onrender.com",
+      "localStorage": [
+        {
+          "name": "token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNhdCIsIk5hbWUiOiJZb3VyIEhpZ2huZXNzIiwiaWF0IjoxNzEzNTQ4NTAzLCJleHAiOjE3MTM1NTU3MDN9.EEQFcjv-l13GNE_oDE-yQQ94ZIK3bMyKK_Oofhnlg3I"
+        }
+      ]
+    }
+  ]
+}
