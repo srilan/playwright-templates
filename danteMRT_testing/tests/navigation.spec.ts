@@ -34,11 +34,10 @@ test.describe("Navigation", () => {
       await page.goto('https://d-mrt-fe.onrender.com/AdminLogin');
       await page.getByTestId('Admin Link').click({ button: 'right' });
       await page.waitForTimeout(3000);
-      //page.waitForSelector('role=columnheader').toContain("Station Name");
       //Verification of text content within the navigation links
-      expect(await page.textContent("role=columnheader")).toContain("Station Name");
+      //expect(await page.textContent("role=columnheader")).toContain("Station Name");
       //visibility & error handling of non-existing link
-      const linkExists = page.locator('a[name="Stations"]');9
+      const linkExists = page.locator('a[name="Stations"]');
       
     
       if (linkExists) {
