@@ -50,10 +50,10 @@ test.describe("PositiveLogIn", () => {
       throw new Error("Sign In button not found");
     }
 
-    // Once logged in, retrieve the access token from local storage
-    const accessToken = await page.evaluate(() => {
-      return localStorage.getItem("access_token");
-    });
+    // // Once logged in, retrieve the access token from local storage
+    // const accessToken = await page.evaluate(() => {
+    //   return localStorage.getItem("access_token");
+    // });
 
     const successfulLoggedInURL =
       "https://d-mrt-fe.onrender.com/UUIDManagement";
@@ -66,8 +66,9 @@ test.describe("NegativeLogIn", () => {
   //Sign In using Invalid Username
   test("InvalidUsername", async ({ page }) => {
     test("Username", async ({ page }) => {
-      // check Username textbox visibility
       const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
 
       // Fills up Username textbox if it is visible
       if (await UsernameTextbox.isVisible()) {
@@ -76,51 +77,51 @@ test.describe("NegativeLogIn", () => {
       } else {
         throw new Error("Username field not found");
       }
+
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("meow");
+
+      await SignInButton.click();
+
+      await expect(
+        page.locator(
+          'div.rnc__notification-message:has-text("User does not Exist!")'
+        )
+      ).toHaveText("User does not Exist!");
     });
 
-    await page.getByRole("textbox", { name: "******************" }).click();
-    await page
-      .getByRole("textbox", { name: "******************" })
-      .fill("meow");
+    //Sign In using Invalid Password
+    test("InvalidPassword", async ({ page }) => {
+      const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
 
-    await page.getByRole("button", { name: "Sign In" }).click();
+      await UsernameTextbox.click();
+      await UsernameTextbox.fill("cat");
 
-    await expect(
-      page.locator(
-        'div.rnc__notification-message:has-text("User does not Exist!")'
-      )
-    ).toHaveText("User does not Exist!");
-  });
+      // Fills up Password textbox if it is visible
+      if (await PasswordTextbox.isVisible()) {
+        await PasswordTextbox.click();
+        await PasswordTextbox.fill("arf");
+      } else {
+        throw new Error("Password field not found");
+      }
 
-  //Sign In using Invalid Password
-  test("InvalidPassword", async ({ page }) => {
-    await page.getByRole("textbox", { name: "Username" }).click();
-    await page.getByRole("textbox", { name: "Username" }).fill("cat");
+      await SignInButton.click();
 
-    const PasswordTextbox = page.getByRole("textbox", {
-      name: "******************",
+      await expect(
+        page.locator(
+          'div.rnc__notification-message:has-text("Invalid Password")'
+        )
+      ).toHaveText("Invalid Password");
     });
-
-    // Fills up Password textbox if it is visible
-    if (await PasswordTextbox.isVisible()) {
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page
-        .getByRole("textbox", { name: "******************" })
-        .fill("arf");
-    } else {
-      throw new Error("Password field not found");
-    }
-
-    await page.getByRole("button", { name: "Sign In" }).click();
-
-    await expect(
-      page.locator('div.rnc__notification-message:has-text("Invalid Password")')
-    ).toHaveText("Invalid Password");
   });
 
   //Sign In with Empty Fields
   test("NoUsernamePassword", async ({ page }) => {
-    await page.getByRole("button", { name: "Sign In" }).click();
+    const SignInButton = page.getByTestId("signInButton");
+
+    await SignInButton.click();
 
     await expect(
       page.locator(
@@ -156,7 +157,9 @@ async function AdminLogin(page) {
 //Create Card
 test.describe("AddNewCard", () => {
   test("BeepCardField", async ({ page }) => {
+    //Calls the function "AdminLogin" to access the Admin Home page
     await AdminLogin(page);
+
     // check "Add new card", ""Generate card", or "New Card"
     const NewCardButton = page.getByTestId("Create Beep Card Button");
     if (await NewCardButton.isVisible()) {
@@ -200,6 +203,7 @@ test.describe("AddNewCard", () => {
       throw new Error(" Create UUID Button not found");
     }
 
+    // expects page to show the appropiate error message through React notification component
     await expect(
       page.locator(
         'div.rnc__notification-message:has-text("Beep Card has been Successfully Created")'
