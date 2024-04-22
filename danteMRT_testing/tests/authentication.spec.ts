@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  // Go to the starting url before each test.
-  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+  // Go to the starting url before each test and have a timeout of
+  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#", {
+    timeout: 30000,
+  });
   await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin#");
 });
 
@@ -47,7 +49,7 @@ test.describe("PositiveLogIn", () => {
     await PasswordTextbox.fill("meow");
 
     if (await SignInButton.isVisible()) {
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
     } else {
       throw new Error("Sign In button not found");
     }
@@ -83,8 +85,9 @@ test.describe("NegativeLogIn", () => {
       await PasswordTextbox.click();
       await PasswordTextbox.fill("meow");
 
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
 
+      // expects page to show the appropiate error message through React notification component
       await expect(
         page.locator(
           'div.rnc__notification-message:has-text("User does not Exist!")'
@@ -109,8 +112,9 @@ test.describe("NegativeLogIn", () => {
         throw new Error("Password field not found");
       }
 
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
 
+      // expects page to show the appropiate error message through React notification component
       await expect(
         page.locator(
           'div.rnc__notification-message:has-text("Invalid Password")'
@@ -125,6 +129,7 @@ test.describe("NegativeLogIn", () => {
 
     await SignInButton.click();
 
+    // expects page to show the appropiate error message through React notification component
     await expect(
       page.locator(
         'div.rnc__notification-message:has-text("Incomplete Fields")'
@@ -147,7 +152,7 @@ async function AdminLogin(page) {
     await PasswordTextbox.click();
     await PasswordTextbox.fill("meow");
 
-    await SignInButton.click();
+    await SignInButton.click({ timeout: 30000 });
 
     const successfulLoggedInURL =
       "https://d-mrt-fe.onrender.com/UUIDManagement";
