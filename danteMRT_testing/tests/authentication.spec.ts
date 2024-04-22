@@ -1,7 +1,11 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+  // Go to the starting url before each test and have a timeout of
+  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#", {
+    timeout: 30000,
+  });
+  await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin#");
 });
 
 //Positive Log in Test
@@ -45,7 +49,7 @@ test.describe("PositiveLogIn", () => {
     await PasswordTextbox.fill("meow");
 
     if (await SignInButton.isVisible()) {
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
     } else {
       throw new Error("Sign In button not found");
     }
@@ -81,8 +85,9 @@ test.describe("NegativeLogIn", () => {
       await PasswordTextbox.click();
       await PasswordTextbox.fill("meow");
 
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
 
+      // expects page to show the appropiate error message through React notification component
       await expect(
         page.locator(
           'div.rnc__notification-message:has-text("User does not Exist!")'
@@ -107,8 +112,9 @@ test.describe("NegativeLogIn", () => {
         throw new Error("Password field not found");
       }
 
-      await SignInButton.click();
+      await SignInButton.click({ timeout: 30000 });
 
+      // expects page to show the appropiate error message through React notification component
       await expect(
         page.locator(
           'div.rnc__notification-message:has-text("Invalid Password")'
@@ -123,6 +129,7 @@ test.describe("NegativeLogIn", () => {
 
     await SignInButton.click();
 
+    // expects page to show the appropiate error message through React notification component
     await expect(
       page.locator(
         'div.rnc__notification-message:has-text("Incomplete Fields")'
@@ -145,7 +152,7 @@ async function AdminLogin(page) {
     await PasswordTextbox.click();
     await PasswordTextbox.fill("meow");
 
-    await SignInButton.click();
+    await SignInButton.click({ timeout: 30000 });
 
     const successfulLoggedInURL =
       "https://d-mrt-fe.onrender.com/UUIDManagement";
@@ -154,13 +161,13 @@ async function AdminLogin(page) {
   }
 }
 
-//Create Card
+//Create new UUID Card
 test.describe("AddNewCard", () => {
   test("BeepCardField", async ({ page }) => {
     //Calls the function "AdminLogin" to access the Admin Home page
     await AdminLogin(page);
 
-    // check "Add new card", ""Generate card", or "New Card"
+    // check "Add new card", ""Generate card", or "New Card" and clicks if it is visible
     const NewCardButton = page.getByTestId("Create Beep Card Button");
     if (await NewCardButton.isVisible()) {
       await NewCardButton.click();
@@ -176,7 +183,7 @@ test.describe("AddNewCard", () => {
       throw new Error("Beep Card textbox not found");
     }
 
-    // check UUID RNG button visibility
+    // check UUID RNG button visibility and clicks if it is visible
     const UuidRngButton = page.getByTestId("generateUUID");
 
     if (await UuidRngButton.isVisible()) {
@@ -197,6 +204,7 @@ test.describe("AddNewCard", () => {
 
     const CreateButton = page.getByTestId("Create Beep Card Button").last();
 
+    // check Create UUID confirmation button visibility and clicks if it is visible
     if (await CreateButton.isVisible()) {
       await CreateButton.click();
     } else {
@@ -206,8 +214,8 @@ test.describe("AddNewCard", () => {
     // expects page to show the appropiate error message through React notification component
     await expect(
       page.locator(
-        'div.rnc__notification-message:has-text("Beep Card has been Successfully Created")'
+        'div.rnc__notification-message:has-text("Beep Card has been Successfuly Created")'
       )
-    ).toHaveText("Beep Card has been Successfully Created");
+    ).toHaveText("Beep Card has been Successfuly Created");
   });
 });
