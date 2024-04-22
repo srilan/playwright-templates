@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
+  // Go to the starting url before each test.
   await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+  await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin#");
 });
 
 //Positive Log in Test
@@ -154,13 +156,13 @@ async function AdminLogin(page) {
   }
 }
 
-//Create Card
+//Create new UUID Card
 test.describe("AddNewCard", () => {
   test("BeepCardField", async ({ page }) => {
     //Calls the function "AdminLogin" to access the Admin Home page
     await AdminLogin(page);
 
-    // check "Add new card", ""Generate card", or "New Card"
+    // check "Add new card", ""Generate card", or "New Card" and clicks if it is visible
     const NewCardButton = page.getByTestId("Create Beep Card Button");
     if (await NewCardButton.isVisible()) {
       await NewCardButton.click();
@@ -176,7 +178,7 @@ test.describe("AddNewCard", () => {
       throw new Error("Beep Card textbox not found");
     }
 
-    // check UUID RNG button visibility
+    // check UUID RNG button visibility and clicks if it is visible
     const UuidRngButton = page.getByTestId("generateUUID");
 
     if (await UuidRngButton.isVisible()) {
@@ -197,6 +199,7 @@ test.describe("AddNewCard", () => {
 
     const CreateButton = page.getByTestId("Create Beep Card Button").last();
 
+    // check Create UUID confirmation button visibility and clicks if it is visible
     if (await CreateButton.isVisible()) {
       await CreateButton.click();
     } else {
@@ -206,8 +209,8 @@ test.describe("AddNewCard", () => {
     // expects page to show the appropiate error message through React notification component
     await expect(
       page.locator(
-        'div.rnc__notification-message:has-text("Beep Card has been Successfully Created")'
+        'div.rnc__notification-message:has-text("Beep Card has been Successfuly Created")'
       )
-    ).toHaveText("Beep Card has been Successfully Created");
+    ).toHaveText("Beep Card has been Successfuly Created");
   });
 });
