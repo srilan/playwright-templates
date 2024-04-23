@@ -7,23 +7,22 @@ const LogOutLink = "https://d-mrt-fe.onrender.com/Taft/In#";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+  //Authentication
+  const UsernameTextbox = page.getByTestId("username");
+  const PasswordTextbox = page.getByTestId("password");
+  const SignInButton = page.getByTestId("signInButton");
+
+  await UsernameTextbox.click();
+  await UsernameTextbox.fill("cat");
+  await PasswordTextbox.click();
+  await PasswordTextbox.fill("meow");
+  await SignInButton.click({ timeout: 30000 });
 });
 
 test.describe("Navigation", () => {
 
     test("stations", async ({ page }) => {
       test.setTimeout(120000)
-    
-      //for authentication
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
-  
-      await UsernameTextbox.click();
-      await UsernameTextbox.fill("cat");
-      await PasswordTextbox.click();
-      await PasswordTextbox.fill("meow");
-      await SignInButton.click({ timeout: 30000 });
 
       //Navigation
       await page.getByRole("link", { name: "Stations" }).click();
@@ -47,16 +46,6 @@ test.describe("Navigation", () => {
   
   
     test("Cards", async ({ page }) => {
-      //for authentication
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
-  
-      await UsernameTextbox.click();
-      await UsernameTextbox.fill("cat");
-      await PasswordTextbox.click();
-      await PasswordTextbox.fill("meow");
-      await SignInButton.click({ timeout: 30000 });
 
       //Navigation
       await page.getByRole("link", { name: "Cards" }).click();
@@ -77,17 +66,6 @@ test.describe("Navigation", () => {
     });
   
     test("General", async ({ page }) => {
-      //for authentication
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
-  
-      await UsernameTextbox.click();
-      await UsernameTextbox.fill("cat");
-      await PasswordTextbox.click();
-      await PasswordTextbox.fill("meow");
-      await SignInButton.click({ timeout: 30000 });
-
     
       //Navigation
       await page.getByRole("link", { name: "General" }).click();
@@ -109,16 +87,6 @@ test.describe("Navigation", () => {
   
     test("Log Out", async ({ page }) => {
       await page.waitForTimeout(3000);
-      //for authentication
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
-  
-      await UsernameTextbox.click();
-      await UsernameTextbox.fill("cat");
-      await PasswordTextbox.click();
-      await PasswordTextbox.fill("meow");
-      await SignInButton.click({ timeout: 30000 });
 
       //Navigation
       await page.getByRole("link", { name: "Log Out" }).click();
