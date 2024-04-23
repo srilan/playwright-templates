@@ -15,7 +15,8 @@ test.beforeEach(async ({ page }) => {
 test.describe("Navigation", () => {
 
     test("stations", async ({ page }) => {
-      
+      test.setTimeout(120000)
+    
       //for authentication
       await page.getByRole("link", { name: "Admin", exact: true }).click();
       await page.getByRole("textbox", { name: "Username" }).click();
@@ -36,6 +37,12 @@ test.describe("Navigation", () => {
       await page.waitForTimeout(3000);
       //Verification of text content within the navigation links
       //expect(await page.textContent("role=columnheader")).toContain("Station Name");
+      
+      await page.waitForSelector("role=columnheader", { timeout: 60000 }); // Wait for the selector to appear
+      const textContent = await page.textContent("role=columnheader"); // Get the text content
+      expect(textContent).toContain("Station Name"); // Check if the text content contains "Station Name"
+      
+      
       //visibility & error handling of non-existing link
       const linkExists = page.locator('a[name="Stations"]');
       
