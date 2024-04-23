@@ -15,6 +15,8 @@ test.beforeEach(async ({ page }) => {
 test.describe("Navigation", () => {
 
     test("stations", async ({ page }) => {
+      test.setTimeout(120000)
+    
       //for authentication
       await page.getByRole("link", { name: "Admin", exact: true }).click();
       await page.getByRole("textbox", { name: "Username" }).click();
@@ -22,18 +24,28 @@ test.describe("Navigation", () => {
       await page.getByRole("textbox", { name: "******************" }).click();
       await page.getByRole("textbox", { name: "******************" }).fill("meow");
       await page.getByRole("button", { name: "Sign In" }).click();
+      await page.waitForTimeout(3000);
       //Navigation
       await page.getByRole("link", { name: "Stations" }).click();
       await page.waitForTimeout(3000);
+
       //verification of url 
       await expect(page).toHaveURL(StationsLink);
       expect(await page.goto('https://d-mrt-fe.onrender.com/StationManagement#'));
       await page.goto('https://d-mrt-fe.onrender.com/AdminLogin');
       await page.getByTestId('Admin Link').click({ button: 'right' });
-      expect(await page.textContent("role=coAlumnheader")).toContain("Station Name");
+      await page.waitForTimeout(3000);
+      //Verification of text content within the navigation links
+      //expect(await page.textContent("role=columnheader")).toContain("Station Name");
+      
+      await page.waitForSelector("role=columnheader", { timeout: 60000 }); // Wait for the selector to appear
+      const textContent = await page.textContent("role=columnheader"); // Get the text content
+      expect(textContent).toContain("Station Name"); // Check if the text content contains "Station Name"
+      
       
       //visibility & error handling of non-existing link
       const linkExists = page.locator('a[name="Stations"]');
+      
     
       if (linkExists) {
         console.log("Exist link");
@@ -53,13 +65,15 @@ test.describe("Navigation", () => {
       await page.getByRole("textbox", { name: "******************" }).click();
       await page.getByRole("textbox", { name: "******************" }).fill("meow");
       await page.getByRole("button", { name: "Sign In" }).click();
+      await page.waitForTimeout(3000);
       //Navigation
       await page.getByRole("link", { name: "Cards" }).click();
       await page.waitForTimeout(3000);
+      //verification of url 
       await expect(page).toHaveURL(CardsLink);
+      //Verification of text content within the navigation links
       expect(await page.textContent("role=columnheader")).toContain("Beep Card");
-  
-      //linkExist
+      //visibility & error handling of non-existing link
       const linkExists = page.locator('a[name="Cards"]');
     
       if (linkExists) {
@@ -78,12 +92,15 @@ test.describe("Navigation", () => {
       await page.getByRole("textbox", { name: "******************" }).click();
       await page.getByRole("textbox", { name: "******************" }).fill("meow");
       await page.getByRole("button", { name: "Sign In" }).click();
+      await page.waitForTimeout(3000);
       //Navigation
       await page.getByRole("link", { name: "General" }).click();
       await page.waitForTimeout(3000);
+      //verification of url 
       await expect(page).toHaveURL(GeneralLink);
+      //Verification of text content within the navigation links
       expect(await page.textContent("role=button")).toContain("Operational Mode", );
-  
+      //visibility & error handling of non-existing link
       const linkExists = page.locator('a[name="General"]');
     
       if (linkExists) {
@@ -95,6 +112,7 @@ test.describe("Navigation", () => {
     });
   
     test("Log Out", async ({ page }) => {
+      await page.waitForTimeout(3000);
       //for authentication
       await page.getByRole("link", { name: "Admin", exact: true }).click();
       await page.getByRole("textbox", { name: "Username" }).click();
@@ -102,12 +120,14 @@ test.describe("Navigation", () => {
       await page.getByRole("textbox", { name: "******************" }).click();
       await page.getByRole("textbox", { name: "******************" }).fill("meow");
       await page.getByRole("button", { name: "Sign In" }).click();
+      await page.waitForTimeout(3000);
       //Navigation
       await page.getByRole("link", { name: "Log Out" }).click();
+      //verification of url 
       await expect(page).toHaveURL(LogOutLink);
       await page.goto("https://d-mrt-fe.onrender.com/StationManagement#");
       await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin");
-      //link
+      //visibility & error handling of non-existing link
       const linkExists = page.locator('a[name="Log Out"]');
     
       if (linkExists) {
@@ -116,8 +136,7 @@ test.describe("Navigation", () => {
         console.log("Does not have any link");
       }
     });
-  
-    
+
   
   });
   
