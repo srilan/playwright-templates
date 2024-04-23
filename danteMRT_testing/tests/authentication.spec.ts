@@ -10,6 +10,7 @@ test.beforeEach(async ({ page }) => {
 
 //Positive Log in Test
 test.describe("PositiveLogIn", () => {
+  //Visibility and Filling Valid Credentials (Username Field only)
   test("Username", async ({ page }) => {
     const UsernameTextbox = page.getByTestId("username");
 
@@ -22,6 +23,7 @@ test.describe("PositiveLogIn", () => {
     }
   });
 
+  //Visibility and Filling Valid Credentials (Password Field only)
   test("Password", async ({ page }) => {
     // check Password textbox visibility
     const PasswordTextbox = page.getByTestId("password");
@@ -35,10 +37,8 @@ test.describe("PositiveLogIn", () => {
     }
   });
 
+  //Visibility and Interaction with "Sign In/Login" Button
   test("Sign in", async ({ page }) => {
-    // Load the saved storage state from the JSON file
-    //await page.context().storageState({ path: "AdminLoginCredentials.json" });
-
     const UsernameTextbox = page.getByTestId("username");
     const PasswordTextbox = page.getByTestId("password");
     const SignInButton = page.getByTestId("signInButton");
@@ -54,11 +54,7 @@ test.describe("PositiveLogIn", () => {
       throw new Error("Sign In button not found");
     }
 
-    // // Once logged in, retrieve the access token from local storage
-    // const accessToken = await page.evaluate(() => {
-    //   return localStorage.getItem("access_token");
-    // });
-
+    //Successful Login Verification
     const successfulLoggedInURL =
       "https://d-mrt-fe.onrender.com/UUIDManagement";
     await expect(page).toHaveURL(successfulLoggedInURL);

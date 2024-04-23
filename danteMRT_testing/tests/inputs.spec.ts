@@ -40,7 +40,7 @@ test.describe("Text Inputs testing", () => {
       .isVisible();
 
     if (userTextBox && passTextBox) {
-      // try {
+      try {
 
       await page.getByRole("textbox", { name: "Username" }).click();
       await page.getByRole("textbox", { name: "Username" }).fill(username);
@@ -59,9 +59,9 @@ test.describe("Text Inputs testing", () => {
       console.log("Login Successful");
       page.close;
 
-      // } catch (err) {
-      //   console.log("Login Failed");
-      // }
+      } catch (err) {
+        console.log("Login Failed");
+      }
     } else {
       console.log("User Input Field Not Found in the Login Page");
     }
