@@ -39,16 +39,21 @@ test.describe("Text Inputs testing", () => {
       .getByRole("textbox", { name: "******************" })
       .isVisible();
 
+
+     // TestIds
+      const usernameField = page.getByTestId("username")
+      const passwordField = page.getByTestId("password")
+      const signInButton = page.getByTestId("signInButton")
+
     if (userTextBox && passTextBox) {
       try {
 
-      await page.getByRole("textbox", { name: "Username" }).click();
-      await page.getByRole("textbox", { name: "Username" }).fill(username);
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page
-        .getByRole("textbox", { name: "******************" })
-        .fill(password);
-      await page.getByRole("button", { name: "Sign In" }).click();
+      await usernameField.click();
+      await usernameField.fill(username);
+      await passwordField.click();
+      await passwordField.fill(password);
+
+      await signInButton.click();
 
       await page.waitForTimeout(3000);
       await expect(page).toHaveURL(Cards);
@@ -74,23 +79,30 @@ test.describe("Text Inputs testing", () => {
     //opens a new browser
     const page = await context.newPage();
 
+    //testIds
+
+    const stationNameField = page.getByTestId("StationName Input")
+    const shortNameField = page.getByTestId("ShortName Input")
+    const longitudeField = page.getByTestId("Coordinates Input for CoordinateX")
+    const latitudeField = page.getByTestId("Coordinates Input for CoordinateY")
+    const confirmButton = page.getByTestId("CreateEdit_Button")
+    const cancelButton = page.getByTestId("Cancel_Button")
+
     try{
     await page.goto(Stations);
 
     //clicks and fill station details
     await page.getByRole("button", { name: "NEW STATION" }).click();
-    await page.getByRole("textbox", { name: "Station Name" }).click();
-    await page.getByRole("textbox", { name: "Station Name" }).fill(stationName);
-    await page.getByRole("textbox", { name: "Station ShortName" }).click();
-    await page
-      .getByRole("textbox", { name: "Station ShortName" })
-      .fill(shortName);
+    await stationNameField.click();
+    await stationNameField.fill(stationName);
+    await shortNameField.click();
+    await shortNameField.fill(shortName);
 
     //clicks and fill the longitude and latitude
-    await page.getByRole("textbox", { name: "Longitude" }).click();
-    await page.getByRole("textbox", { name: "Longitude" }).fill(lng);
-    await page.getByRole("textbox", { name: "Latitude" }).click();
-    await page.getByRole("textbox", { name: "Latitude" }).fill(lat);
+    await longitudeField.click();
+    await longitudeField.fill(lng);
+    await latitudeField.click();
+    await latitudeField.fill(lat);
 
     //clcks on the connections for drop down
     await page.locator(".css-19bb58m").click();
@@ -106,7 +118,7 @@ test.describe("Text Inputs testing", () => {
     await page.getByLabel("Remove Ayala Station").click();
 
     //clicks on the create button
-    await page.getByRole("button", { name: "Create" }).click();
+    await confirmButton.click();
 
     await page.waitForTimeout(2000);
 
@@ -123,6 +135,15 @@ test.describe("Text Inputs testing", () => {
     await page.goto(Stations);
     await page.waitForTimeout(3000);
 
+     //testIds
+
+     const stationNameField = page.getByTestId("StationName Input")
+     const shortNameField = page.getByTestId("ShortName Input")
+     const longitudeField = page.getByTestId("Coordinates Input for CoordinateX")
+     const latitudeField = page.getByTestId("Coordinates Input for CoordinateY")
+     const confirmButton = page.getByTestId("CreateEdit_Button")
+     const cancelButton = page.getByTestId("Cancel_Button")
+
     //check if station is visible
     try {
       const stationToEdit = await page
@@ -136,24 +157,20 @@ test.describe("Text Inputs testing", () => {
           .click();
 
         //clicks and fill station details
-        await page.getByRole("textbox", { name: "Station Name" }).click();
-        await page.getByRole("textbox", { name: "Station Name" }).clear();
-        await page
-          .getByRole("textbox", { name: "Station Name" })
-          .fill(newStationName);
-        await page.getByRole("textbox", { name: "Station ShortName" }).click();
-        await page.getByRole("textbox", { name: "Station ShortName" }).clear();
-        await page
-          .getByRole("textbox", { name: "Station ShortName" })
-          .fill(newShortName);
+        await stationNameField.click();
+        await stationNameField.clear();
+        await stationNameField.fill(newStationName);
+        await shortNameField.click();
+        await shortNameField.clear();
+        await shortNameField.fill(newShortName);
 
         //clicks and fill the longitude and latitude
-        await page.getByRole("textbox", { name: "Longitude" }).click();
-        await page.getByRole("textbox", { name: "Longitude" }).clear();
-        await page.getByRole("textbox", { name: "Longitude" }).fill(newLng);
-        await page.getByRole("textbox", { name: "Latitude" }).click();
-        await page.getByRole("textbox", { name: "Latitude" }).clear();
-        await page.getByRole("textbox", { name: "Latitude" }).fill(newLat);
+        await longitudeField.click();
+        await longitudeField.clear();
+        await longitudeField.fill(newLng);
+        await latitudeField.click();
+        await latitudeField.clear();
+        await latitudeField.fill(newLat);
 
         //clicks comboBox
         await page.locator(".css-19bb58m").click();
@@ -164,7 +181,7 @@ test.describe("Text Inputs testing", () => {
         //clicks to remove the option
         await page.getByLabel("Remove iNO").click();
 
-        await page.getByRole("button", { name: "Update" }).click();
+        await confirmButton.click();
       } else {
         console.log("Station Not Found");
       }
