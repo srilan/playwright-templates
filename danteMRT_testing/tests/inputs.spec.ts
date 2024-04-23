@@ -25,7 +25,12 @@ test.beforeEach(async ({ page }) => {
   await page.goto(Start);
 });
 
+
+// Container of tests
 test.describe("Text Inputs testing", () => {
+
+
+  // Test for Admin Login 
   test("Admin Login", async ({ page }) => {
     await page.getByRole("link", { name: "Admin", exact: true }).click();
 
@@ -55,7 +60,7 @@ test.describe("Text Inputs testing", () => {
 
       await signInButton.click();
 
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(5000);
       await expect(page).toHaveURL(Cards);
 
       //saves url and token into json file
@@ -72,6 +77,8 @@ test.describe("Text Inputs testing", () => {
     }
   });
 
+
+  //Creation of new Station "San Juan"
   test("Creation of new Station", async ({ browser }) => {
     //uses token in json file to access the admin page after opening a new browser
     const context = await browser.newContext({ storageState: "admin.json" });
@@ -120,7 +127,7 @@ test.describe("Text Inputs testing", () => {
     //clicks on the create button
     await confirmButton.click();
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
 
 
     }catch(err){
@@ -128,12 +135,14 @@ test.describe("Text Inputs testing", () => {
     }
   });
 
+
+  // Updates the exisiting station "San Juan"
   test("Editing of Station", async ({ browser }) => {
     const context = await browser.newContext({ storageState: "admin.json" });
     const page = await context.newPage();
 
     await page.goto(Stations);
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
 
      //testIds
 
@@ -190,12 +199,14 @@ test.describe("Text Inputs testing", () => {
     }
   });
 
+
+  //Deletes the Station "San Juan"
   test("Deletion of Station", async ({ browser }) => {
     const context = await browser.newContext({ storageState: "admin.json" });
     const page = await context.newPage();
 
     await page.goto(Stations);
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
 
 
     try {
@@ -229,7 +240,7 @@ test.describe("Text Inputs testing", () => {
   });
 });
 
-//Station Managemen
+//Station Management
 
 // test("Form Input", async ({ page }) => {
 //   // Perform authentication

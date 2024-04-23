@@ -16,16 +16,16 @@ test.beforeEach(async ({ page }) => {
   await UsernameTextbox.fill("cat");
   await PasswordTextbox.click();
   await PasswordTextbox.fill("meow");
-  await SignInButton.click({ timeout: 30000 });
+  await SignInButton.click({ timeout: 5000 });
 });
 
 test.describe("Navigation", () => {
   test("stations", async ({ page }) => {
-    test.setTimeout(120000);
+    test.setTimeout(5000);
 
     //Navigation
     await page.getByRole("link", { name: "Stations" }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
 
     //verification of url
     await expect(page).toHaveURL(StationsLink);
@@ -46,7 +46,7 @@ test.describe("Navigation", () => {
   test("Cards", async ({ page }) => {
     //Navigation
     await page.getByRole("link", { name: "Cards" }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
     //verification of url
     await expect(page).toHaveURL(CardsLink);
     //Verification of text content within the navigation links
@@ -64,7 +64,7 @@ test.describe("Navigation", () => {
   test("General", async ({ page }) => {
     //Navigation
     await page.getByRole("link", { name: "General" }).click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
     //verification of url
     await expect(page).toHaveURL(GeneralLink);
     //Verification of text content within the navigation links
@@ -80,7 +80,7 @@ test.describe("Navigation", () => {
   });
 
   test("Log Out", async ({ page }) => {
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
 
     //Navigation
     await page.getByRole("link", { name: "Log Out" }).click();
