@@ -1,8 +1,5 @@
 import { test, expect } from "@playwright/test";
 
-let username = "cat";
-let password = "meow";
-
 const StationsLink = "https://d-mrt-fe.onrender.com/StationManagement#";
 const CardsLink = "https://d-mrt-fe.onrender.com/UUIDManagement#";
 const GeneralLink = "https://d-mrt-fe.onrender.com/FareManagement#";
@@ -18,13 +15,17 @@ test.describe("Navigation", () => {
       test.setTimeout(120000)
     
       //for authentication
-      await page.getByRole("link", { name: "Admin", exact: true }).click();
-      await page.getByRole("textbox", { name: "Username" }).click();
-      await page.getByRole("textbox", { name: "Username" }).fill("cat");
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page.getByRole("textbox", { name: "******************" }).fill("meow");
-      await page.getByRole("button", { name: "Sign In" }).click();
-      await page.waitForTimeout(3000);
+      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+      const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
+  
+      await UsernameTextbox.click();
+      await UsernameTextbox.fill("cat");
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("meow");
+      await SignInButton.click({ timeout: 30000 });
+
       //Navigation
       await page.getByRole("link", { name: "Stations" }).click();
       await page.waitForTimeout(3000);
@@ -46,16 +47,19 @@ test.describe("Navigation", () => {
     });
   
   
-  
     test("Cards", async ({ page }) => {
       //for authentication
-      await page.getByRole("link", { name: "Admin", exact: true }).click();
-      await page.getByRole("textbox", { name: "Username" }).click();
-      await page.getByRole("textbox", { name: "Username" }).fill("cat");
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page.getByRole("textbox", { name: "******************" }).fill("meow");
-      await page.getByRole("button", { name: "Sign In" }).click();
-      await page.waitForTimeout(3000);
+      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+      const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
+  
+      await UsernameTextbox.click();
+      await UsernameTextbox.fill("cat");
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("meow");
+      await SignInButton.click({ timeout: 30000 });
+
       //Navigation
       await page.getByRole("link", { name: "Cards" }).click();
       await page.waitForTimeout(3000);
@@ -76,13 +80,18 @@ test.describe("Navigation", () => {
   
     test("General", async ({ page }) => {
       //for authentication
-      await page.getByRole("link", { name: "Admin", exact: true }).click();
-      await page.getByRole("textbox", { name: "Username" }).click();
-      await page.getByRole("textbox", { name: "Username" }).fill("cat");
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page.getByRole("textbox", { name: "******************" }).fill("meow");
-      await page.getByRole("button", { name: "Sign In" }).click();
-      await page.waitForTimeout(3000);
+      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+      const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
+  
+      await UsernameTextbox.click();
+      await UsernameTextbox.fill("cat");
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("meow");
+      await SignInButton.click({ timeout: 30000 });
+
+    
       //Navigation
       await page.getByRole("link", { name: "General" }).click();
       await page.waitForTimeout(3000);
@@ -104,13 +113,17 @@ test.describe("Navigation", () => {
     test("Log Out", async ({ page }) => {
       await page.waitForTimeout(3000);
       //for authentication
-      await page.getByRole("link", { name: "Admin", exact: true }).click();
-      await page.getByRole("textbox", { name: "Username" }).click();
-      await page.getByRole("textbox", { name: "Username" }).fill("cat");
-      await page.getByRole("textbox", { name: "******************" }).click();
-      await page.getByRole("textbox", { name: "******************" }).fill("meow");
-      await page.getByRole("button", { name: "Sign In" }).click();
-      await page.waitForTimeout(3000);
+      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
+      const UsernameTextbox = page.getByTestId("username");
+      const PasswordTextbox = page.getByTestId("password");
+      const SignInButton = page.getByTestId("signInButton");
+  
+      await UsernameTextbox.click();
+      await UsernameTextbox.fill("cat");
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("meow");
+      await SignInButton.click({ timeout: 30000 });
+
       //Navigation
       await page.getByRole("link", { name: "Log Out" }).click();
       //verification of url 
