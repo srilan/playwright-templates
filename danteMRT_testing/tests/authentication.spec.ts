@@ -65,58 +65,54 @@ test.describe("PositiveLogIn", () => {
 test.describe("NegativeLogIn", () => {
   //Sign In using Invalid Username
   test("InvalidUsername", async ({ page }) => {
-    test("Username", async ({ page }) => {
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
+    const UsernameTextbox = page.getByTestId("username");
+    const PasswordTextbox = page.getByTestId("password");
+    const SignInButton = page.getByTestId("signInButton");
 
-      // Fills up Username textbox if it is visible
-      if (await UsernameTextbox.isVisible()) {
-        await UsernameTextbox.click();
-        await UsernameTextbox.fill("catto");
-      } else {
-        throw new Error("Username field not found");
-      }
-
-      await PasswordTextbox.click();
-      await PasswordTextbox.fill("meow");
-
-      await SignInButton.click({ timeout: 30000 });
-
-      // expects page to show the appropiate error message through React notification component
-      await expect(
-        page.locator(
-          'div.rnc__notification-message:has-text("User does not Exist!")'
-        )
-      ).toHaveText("User does not Exist!");
-    });
-
-    //Sign In using Invalid Password
-    test("InvalidPassword", async ({ page }) => {
-      const UsernameTextbox = page.getByTestId("username");
-      const PasswordTextbox = page.getByTestId("password");
-      const SignInButton = page.getByTestId("signInButton");
-
+    // Fills up Username textbox if it is visible
+    if (await UsernameTextbox.isVisible()) {
       await UsernameTextbox.click();
-      await UsernameTextbox.fill("cat");
+      await UsernameTextbox.fill("catto");
+    } else {
+      throw new Error("Username field not found");
+    }
 
-      // Fills up Password textbox if it is visible
-      if (await PasswordTextbox.isVisible()) {
-        await PasswordTextbox.click();
-        await PasswordTextbox.fill("arf");
-      } else {
-        throw new Error("Password field not found");
-      }
+    await PasswordTextbox.click();
+    await PasswordTextbox.fill("meow");
 
-      await SignInButton.click({ timeout: 30000 });
+    await SignInButton.click({ timeout: 30000 });
 
-      // expects page to show the appropiate error message through React notification component
-      await expect(
-        page.locator(
-          'div.rnc__notification-message:has-text("Invalid Password")'
-        )
-      ).toHaveText("Invalid Password");
-    });
+    // expects page to show the appropiate error message through React notification component
+    await expect(
+      page.locator(
+        'div.rnc__notification-message:has-text("User does not Exist!")'
+      )
+    ).toHaveText("User does not Exist!");
+  });
+
+  //Sign In using Invalid Password
+  test("InvalidPassword", async ({ page }) => {
+    const UsernameTextbox = page.getByTestId("username");
+    const PasswordTextbox = page.getByTestId("password");
+    const SignInButton = page.getByTestId("signInButton");
+
+    await UsernameTextbox.click();
+    await UsernameTextbox.fill("cat");
+
+    // Fills up Password textbox if it is visible
+    if (await PasswordTextbox.isVisible()) {
+      await PasswordTextbox.click();
+      await PasswordTextbox.fill("arf");
+    } else {
+      throw new Error("Password field not found");
+    }
+
+    await SignInButton.click({ timeout: 30000 });
+
+    // expects page to show the appropiate error message through React notification component
+    await expect(
+      page.locator('div.rnc__notification-message:has-text("Invalid Password")')
+    ).toHaveText("Invalid Password");
   });
 
   //Sign In with Empty Fields
