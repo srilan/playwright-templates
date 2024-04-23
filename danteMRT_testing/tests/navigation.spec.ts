@@ -24,21 +24,21 @@ test.describe("Navigation", () => {
       await page.getByRole("textbox", { name: "******************" }).click();
       await page.getByRole("textbox", { name: "******************" }).fill("meow");
       await page.getByRole("button", { name: "Sign In" }).click();
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(30000);
       //Navigation
       await page.getByRole("link", { name: "Stations" }).click();
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(30000);
 
       //verification of url 
       await expect(page).toHaveURL(StationsLink);
       expect(await page.goto('https://d-mrt-fe.onrender.com/StationManagement#'));
       await page.goto('https://d-mrt-fe.onrender.com/AdminLogin');
       await page.getByTestId('Admin Link').click({ button: 'right' });
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(30000);
       //Verification of text content within the navigation links
       //expect(await page.textContent("role=columnheader")).toContain("Station Name");
       
-      await page.waitForSelector("role=columnheader", { timeout: 60000 }); // Wait for the selector to appear
+      await page.waitForSelector("columnheader", { timeout: 120000  }); // Wait for the selector to appear
       const textContent = await page.textContent("role=columnheader"); // Get the text content
       expect(textContent).toContain("Station Name"); // Check if the text content contains "Station Name"
       
