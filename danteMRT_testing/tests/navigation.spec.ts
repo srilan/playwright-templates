@@ -6,7 +6,7 @@ const GeneralLink = "https://d-mrt-fe.onrender.com/FareManagement#";
 const LogOutLink = "https://d-mrt-fe.onrender.com/Taft/In#";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("https://d-mrt-fe.onrender.com/taft/in");
+  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
 });
 
 test.describe("Navigation", () => {
@@ -15,7 +15,6 @@ test.describe("Navigation", () => {
       test.setTimeout(120000)
     
       //for authentication
-      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
       const UsernameTextbox = page.getByTestId("username");
       const PasswordTextbox = page.getByTestId("password");
       const SignInButton = page.getByTestId("signInButton");
@@ -49,7 +48,6 @@ test.describe("Navigation", () => {
   
     test("Cards", async ({ page }) => {
       //for authentication
-      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
       const UsernameTextbox = page.getByTestId("username");
       const PasswordTextbox = page.getByTestId("password");
       const SignInButton = page.getByTestId("signInButton");
@@ -80,7 +78,6 @@ test.describe("Navigation", () => {
   
     test("General", async ({ page }) => {
       //for authentication
-      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
       const UsernameTextbox = page.getByTestId("username");
       const PasswordTextbox = page.getByTestId("password");
       const SignInButton = page.getByTestId("signInButton");
@@ -113,7 +110,6 @@ test.describe("Navigation", () => {
     test("Log Out", async ({ page }) => {
       await page.waitForTimeout(3000);
       //for authentication
-      await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
       const UsernameTextbox = page.getByTestId("username");
       const PasswordTextbox = page.getByTestId("password");
       const SignInButton = page.getByTestId("signInButton");
