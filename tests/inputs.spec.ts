@@ -32,7 +32,9 @@ test.beforeEach(async ({ page }) => {
       await passwordField.click();
       await passwordField.fill(loginDetails.password);
 
-      await signInButton.click();
+
+        await signInButton.click();
+
 
       await expect(page).toHaveURL(loginCardsUrl);
 
@@ -47,6 +49,7 @@ test.beforeEach(async ({ page }) => {
     console.log("User Input Field Not Found in the Login Page");
   }
 });
+
 
 // Container of tests
 test.describe("Text Inputs testing", () => {
