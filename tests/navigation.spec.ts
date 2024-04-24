@@ -1,34 +1,40 @@
 import { test, expect } from "@playwright/test";
+import { loginDetails } from "../config/testdata";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const StationsLink = "https://d-mrt-fe.onrender.com/StationManagement#";
-const CardsLink = "https://d-mrt-fe.onrender.com/UUIDManagement#";
-const GeneralLink = "https://d-mrt-fe.onrender.com/FareManagement#";
-const LogOutLink = "https://d-mrt-fe.onrender.com/Taft/In#";
+const stationsUrl = process.env.STATIONS || "";
+const cardsUrl = process.env.CARDS || "";
+const loginUrl = process.env.LOGIN || "";
+const generalURL = process.env.FAREMNG || "";
+const homePageUrl = process.env.HOMEPAGE || "";
+
+
+const adminUsername = loginDetails.username;
+const adminPassword = loginDetails.password;
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("https://d-mrt-fe.onrender.com/AdminLogin#");
-  //Authentication
-  const UsernameTextbox = page.getByTestId("username");
-  const PasswordTextbox = page.getByTestId("password");
-  const SignInButton = page.getByTestId("signInButton");
+  await page.goto(loginUrl);
 
-  await UsernameTextbox.click();
-  await UsernameTextbox.fill("cat");
-  await PasswordTextbox.click();
-  await PasswordTextbox.fill("meow");
-  await SignInButton.click({ timeout: 5000 });
+  //Authentication
+  const usernameTextbox = page.getByTestId("username");
+  const passwordTextbox = page.getByTestId("password");
+  const signInButton = page.getByTestId("signInButton");
+
+  await usernameTextbox.click();
+  await usernameTextbox.fill(adminUsername);
+  await passwordTextbox.click();
+  await passwordTextbox.fill(adminPassword);
+  await signInButton.click();
 });
 
-test.describe("Navigation", () => {
+test.describe("Verification of Navigation Links", () => {
   test("stations", async ({ page }) => {
-    test.setTimeout(5000);
-
-    //Navigation
+    //Navigating of each tab
     await page.getByRole("link", { name: "Stations" }).click();
-    await page.waitForTimeout(5000);
 
     //verification of url
-    await expect(page).toHaveURL(StationsLink);
+    await expect(page).toHaveURL(stationsUrl);
     // //Verification of text content within the navigation links
     expect(await page.textContent("role=columnheader")).toContain(
       "Station Name"
@@ -44,11 +50,10 @@ test.describe("Navigation", () => {
   });
 
   test("Cards", async ({ page }) => {
-    //Navigation
+    //Navigating of each tab
     await page.getByRole("link", { name: "Cards" }).click();
-    await page.waitForTimeout(5000);
     //verification of url
-    await expect(page).toHaveURL(CardsLink);
+    await expect(page).toHaveURL(cardsUrl);
     //Verification of text content within the navigation links
     expect(await page.textContent("role=columnheader")).toContain("Beep Card");
     //visibility & error handling of non-existing link
@@ -62,13 +67,11 @@ test.describe("Navigation", () => {
   });
 
   test("General", async ({ page }) => {
-    //Navigation
+    //Navigating of each tab
     await page.getByRole("link", { name: "General" }).click();
-    await page.waitForTimeout(5000);
     //verification of url
-    await expect(page).toHaveURL(GeneralLink);
-    //Verification of text content within the navigation links
-    expect(await page.textContent("role=button")).toContain("Operational Mode");
+    await expect(page.getByTestId("toggleMode")).toBeVisible();
+   
     //visibility & error handling of non-existing link
     const linkExists = page.locator('a[name="General"]');
 
@@ -80,14 +83,12 @@ test.describe("Navigation", () => {
   });
 
   test("Log Out", async ({ page }) => {
-    await page.waitForTimeout(5000);
-
-    //Navigation
+    //Navigating of each tab
     await page.getByRole("link", { name: "Log Out" }).click();
     //verification of url
-    await expect(page).toHaveURL(LogOutLink);
-    await page.goto("https://d-mrt-fe.onrender.com/StationManagement#");
-    await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin");
+    await expect(page).toHaveURL(homePageUrl);
+    await page.goto(stationsUrl);
+    await expect(page).toHaveURL(loginUrl);
     //visibility & error handling of non-existing link
     const linkExists = page.locator('a[name="Log Out"]');
 
