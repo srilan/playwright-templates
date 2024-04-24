@@ -53,21 +53,21 @@ test.describe("Text Inputs testing", () => {
     if (userTextBox && passTextBox) {
       try {
 
-      await usernameField.click();
-      await usernameField.fill(username);
-      await passwordField.click();
-      await passwordField.fill(password);
+        await usernameField.click();
+        await usernameField.fill(username);
+        await passwordField.click();
+        await passwordField.fill(password);
 
-      await signInButton.click();
+        await signInButton.click();
 
-      await page.waitForTimeout(5000);
-      await expect(page).toHaveURL(Cards);
+        await page.waitForTimeout(5000);
+        await expect(page).toHaveURL(Cards);
 
-      //saves url and token into json file
-      await page.context().storageState({ path: "admin.json" });
+        //saves url and token into json file
+        await page.context().storageState({ path: "admin.json" });
 
-      console.log("Login Successful");
-      page.close;
+        console.log("Login Successful");
+        page.close;
 
       } catch (err) {
         console.log("Login Failed");
