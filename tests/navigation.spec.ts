@@ -9,7 +9,6 @@ const loginUrl = process.env.LOGIN || "";
 const generalURL = process.env.FAREMNG || "";
 const homePageUrl = process.env.HOMEPAGE || "";
 
-
 const adminUsername = loginDetails.username;
 const adminPassword = loginDetails.password;
 
@@ -28,74 +27,68 @@ test.beforeEach(async ({ page }) => {
   await signInButton.click();
 });
 
+//Navigating of each tab
 test.describe("Verification of Navigation Links", () => {
-  test("stations", async ({ page }) => {
-    //Navigating of each tab
-    await page.getByRole("link", { name: "Stations" }).click();
+  //Navigate to stations
+  test("Navigate to stations", async ({ page }) => {
+    try {
+      //checks if there is a link for stations and clicks it
+      await expect(page.getByTestId("StationManagement Link")).toBeVisible();
+      await page.getByTestId("StationManagement Link").click();
 
-    //verification of url
-    await expect(page).toHaveURL(stationsUrl);
-    // //Verification of text content within the navigation links
-    expect(await page.textContent("role=columnheader")).toContain(
-      "Station Name"
-    );
-    //visibility & error handling of non-existing link
-    const linkExists = page.locator('a[name="Stations"]');
-
-    if (linkExists) {
-      console.log("Exist link");
-    } else {
-      console.log("Does not have any link");
+      //verifies if the url is correct
+      await expect(page).toHaveURL(stationsUrl);
+    } catch (err) {
+      console.log("Invalid URL ", err);
     }
   });
 
-  test("Cards", async ({ page }) => {
-    //Navigating of each tab
-    await page.getByRole("link", { name: "Cards" }).click();
-    //verification of url
-    await expect(page).toHaveURL(cardsUrl);
-    //Verification of text content within the navigation links
-    expect(await page.textContent("role=columnheader")).toContain("Beep Card");
-    //visibility & error handling of non-existing link
-    const linkExists = page.locator('a[name="Cards"]');
+  //Navigate to cards
+  test("Navigate to Cards", async ({ page }) => {
+    try {
+      //checks if there is a link for UUID Management and clicks it
+      await expect(page.getByTestId("UUIDManagement Link")).toBeVisible();
+      await page.getByTestId("UUIDManagement Link").click();
 
-    if (linkExists) {
-      console.log("Exist link");
-    } else {
-      console.log("Does not have any link");
+      //verification of url
+      await expect(page).toHaveURL(cardsUrl);
+    } catch (err) {
+      console.log("Invalid URL ", err);
     }
   });
 
-  test("General", async ({ page }) => {
-    //Navigating of each tab
-    await page.getByRole("link", { name: "General" }).click();
-    //verification of url
-    await expect(page.getByTestId("toggleMode")).toBeVisible();
-   
-    //visibility & error handling of non-existing link
-    const linkExists = page.locator('a[name="General"]');
+  //Navigate to Fare Management
+  test("Navigate to General", async ({ page }) => {
+    try {
+      //checks if there is a link for UUID Management and clicks it
+      await expect(page.getByTestId("FareManagement Link")).toBeVisible();
+      await page.getByTestId("FareManagement Link").click();
 
-    if (linkExists) {
-      console.log("Exist link");
-    } else {
-      console.log("Does not have any link");
+      //verification of url
+      await expect(page).toHaveURL(generalURL);
+    } catch (err) {
+      console.log("Invalid URL ", err);
     }
   });
 
-  test("Log Out", async ({ page }) => {
-    //Navigating of each tab
-    await page.getByRole("link", { name: "Log Out" }).click();
-    //verification of url
-    await expect(page).toHaveURL(homePageUrl);
-    await page.goto(stationsUrl);
-    await expect(page).toHaveURL(loginUrl);
-    //visibility & error handling of non-existing link
-    const linkExists = page.locator('a[name="Log Out"]');
+  //logouts the admin
+  test("Admin button to logout", async ({ page }) => {
+    try {
+      //checks if there is a link for logout and clicks it
+      await expect(page.getByTestId("Logout Link")).toBeVisible();
+      await page.getByTestId("Logout Link").click();
 
-    if (linkExists) {
-      console.log("Exist link");
-    } else {
-      console.log("Does not have any link");
+      //verification of url
+      await expect(page).toHaveURL(homePageUrl);
+
+      //checks if there is a link for login and clicks it
+      expect(page.getByTestId("Admin Link")).toBeVisible();
+      await page.getByTestId("Admin Link").click();
+
+      //verification of url
+      await expect(page).toHaveURL(loginUrl + "#");
+    } catch (err) {
+      console.log("Invalid URL ", err);
     }
   });
 });

@@ -1,9 +1,7 @@
-// Login Detail
-
-// testing details for login 
+// testing details for login
 export const loginDetails = {
-  username: "cat",
-  password: "meow",
+  username: "",
+  password: "",
 };
 
 // testing for text input for station
@@ -17,6 +15,20 @@ export const stationDetails = {
 export const updatedStationDetails = {
   lng: "14.606674408363373",
   lat: "121.02624893188478",
+  stationName: "San Juan Station",
+  shortName: "sj",
+};
+
+export const invalidStationDetails = {
+  lng: "longtitude",
+  lat: "latitude",
+  stationName: "San Juan",
+  shortName: "SJ",
+};
+
+export const invalidUpdatedStationDetails = {
+  lng: "longtitude",
+  lat: "latitude",
   stationName: "San Juan Station",
   shortName: "sj",
 };
