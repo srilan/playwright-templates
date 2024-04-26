@@ -33,6 +33,7 @@ test.beforeEach(async ({ page }) => {
     await passwordField.click();
     await passwordField.fill(loginDetails.password);
 
+        await signInButton.click();
     await signInButton.click();
 
     //expects the page to goto the loginCardsUrl
