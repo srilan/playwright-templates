@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { loginDetails } from "../config/testdata";
 import * as dotenv from "dotenv";
+
+
 dotenv.config();
 
 const stationsUrl = process.env.STATIONS || "";
@@ -39,7 +41,7 @@ test.describe("Verification of Navigation Links", () => {
       //verifies if the url is correct
       await expect(page).toHaveURL(stationsUrl);
     } catch (err) {
-      console.log("Invalid URL ", err);
+      throw new Error("Invalid URL ");
     }
   });
 
@@ -53,7 +55,7 @@ test.describe("Verification of Navigation Links", () => {
       //verification of url
       await expect(page).toHaveURL(cardsUrl);
     } catch (err) {
-      console.log("Invalid URL ", err);
+      throw new Error("Invalid URL ");
     }
   });
 
@@ -67,7 +69,8 @@ test.describe("Verification of Navigation Links", () => {
       //verification of url
       await expect(page).toHaveURL(generalURL);
     } catch (err) {
-      console.log("Invalid URL ", err);
+      throw new Error("Invalid URL ");
+
     }
   });
 
@@ -88,7 +91,7 @@ test.describe("Verification of Navigation Links", () => {
       //verification of url
       await expect(page).toHaveURL(loginUrl + "#");
     } catch (err) {
-      console.log("Invalid URL ", err);
+      throw new Error("Invalid URL ");
     }
   });
 });
