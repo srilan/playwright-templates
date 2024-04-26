@@ -32,3 +32,15 @@ export const invalidUpdatedStationDetails = {
   stationName: "San Juan Station",
   shortName: "sj",
 };
+
+// testing for text input for card
+export const validCardDetails = {
+  uuid: "5991641473297997",
+  balance: "1000",
+
+};
+
+export const invalidCardDetails = {
+  uuid: "1231231231",
+  balance: "0",
+};

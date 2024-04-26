@@ -33,7 +33,7 @@ test.beforeEach(async ({ page }) => {
     await passwordField.click();
     await passwordField.fill(loginDetails.password);
 
-        await signInButton.click();
+    await signInButton.click();
     await signInButton.click();
 
     //expects the page to goto the loginCardsUrl
@@ -123,14 +123,14 @@ test.describe("Creation of new Station", () => {
       await page.locator(".css-19bb58m").click();
 
       //clicks on the the corresponding option
-      await page.getByRole("option", { name: "iNO" }).click();
+      await page.getByRole("option", { name: "North Avenue Station" }).click();
       await page.locator(".css-19bb58m").click();
 
       //clicks on the the corresponding option
-      await page.getByRole("option", { name: "Ayala Station" }).click();
+      await page.getByRole("option", { name: "Some Station" }).click();
 
       //clicks to remove the option
-      await page.getByLabel("Remove Ayala Station").click();
+      await page.getByLabel("Remove Some Station").click();
 
       //clicks on the create button
       await confirmButton.click();
@@ -141,7 +141,7 @@ test.describe("Creation of new Station", () => {
 
       console.log("Station Created");
     } catch (err) {
-      console.log("Error in Creating Station" + err);
+      throw new Error("Error in Creating Station");
     }
   });
 
@@ -163,7 +163,7 @@ test.describe("Creation of new Station", () => {
 
       console.log("Station is present in the list");
     } catch (err) {
-      console.log("Error in Checking Station" + err);
+      throw new Error("Error in Checking Station");
     }
   });
 
@@ -236,7 +236,8 @@ test.describe("Creation of new Station", () => {
 
       console.log("Station not created");
     } catch (err) {
-      console.log("Error in Creating Station" + err);
+      throw new Error("Error in Creating Station");
+     
     }
   });
 });
@@ -295,20 +296,26 @@ test.describe("Editing of Exisitng Station", () => {
       await page.locator(".css-19bb58m").click();
 
       //clicks on the the corresponding option
-      await page.getByRole("option", { name: "Ayala Station" }).click();
+      await page.getByRole("option", { name: "Some Station" }).click();
 
       //clicks to remove the option
-      await page.getByLabel("Remove iNO").click();
+      await page.getByLabel("Remove North Avenue Station").click();
 
       await confirmButton.click();
 
       await expect(
-        page.getByRole("row", { name: "San Juan Station sj" })
+        page.getByRole("row", {
+          name:
+            updatedStationDetails.stationName +
+            " " +
+            updatedStationDetails.shortName,
+        })
       ).toBeVisible();
 
       console.log("Station Edited");
     } catch (err) {
-      console.log("Error in Editing Station " + err);
+      throw new Error("Error in Editing Station");
+      
     }
   });
 
@@ -333,7 +340,8 @@ test.describe("Editing of Exisitng Station", () => {
 
       console.log("Station is present in the list");
     } catch (err) {
-      console.log("Error in Checking Station " + err);
+      throw new Error("Error in Checking Station");
+      
     }
   });
 
@@ -394,7 +402,8 @@ test.describe("Editing of Exisitng Station", () => {
 
       console.log("Station not edited");
     } catch (err) {
-      console.log("Error in Editing Station " + err);
+      throw new Error("Error in Editing Station");
+
     }
   });
 });
@@ -432,7 +441,7 @@ test.describe("Deletion of Exisitng Station", () => {
       await expect(page.getByRole("button", { name: "Proceed" })).toBeHidden();
       console.log("Station Deleted");
     } catch (err) {
-      console.log("Error in Deleting Station " + err);
+      throw new Error("Error in Deleting Station");
     }
   });
 
@@ -457,7 +466,7 @@ test.describe("Deletion of Exisitng Station", () => {
 
       console.log("Station is deleted successfully");
     } catch (err) {
-      console.log("Error in Checking Station " + err);
+      throw new Error("Error in Checking Station");
     }
   });
 });

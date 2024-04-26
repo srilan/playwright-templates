@@ -15,7 +15,7 @@ const adminPassword = loginDetails.password;
 //Go to the starting url before each test
 test.beforeEach(async ({ page }) => {
   await page.goto(loginUrl);
-  await expect(page).toHaveURL("https://d-mrt-fe.onrender.com/AdminLogin");
+  await expect(page).toHaveURL(loginUrl);
 });
 
 test.describe("Positive login test with username and password textboxes and Sign In/Login button", () => {
