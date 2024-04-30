@@ -2,7 +2,6 @@ import { test, expect } from "@playwright/test";
 import { loginDetails } from "../config/testdata";
 import * as dotenv from "dotenv";
 
-
 dotenv.config();
 
 const loginUrl = process.env.LOGIN || "";
@@ -24,56 +23,50 @@ test.beforeEach(async ({ page }) => {
   await passwordTextbox.fill(adminPassword);
   await signInButton.click();
 
-  await page.getByTestId('FareManagement Link').click();
-
+  await page.getByTestId("FareManagement Link").click();
 });
 
 test.describe("Fare", () => {
-       
+  test("Verify Toggle Mode Click", async ({ page }) => {
+    //Toggle Clickable Check
+    await page.getByTestId("toggleMode").click();
 
-    test('Verify Toggle Mode Click', async ({ page }) => {
+    await page.waitForSelector('[data-testid="currentMode-false"]');
+    //Verification of Current Mode
+    // await expect(page.getByTestId("currentMode")).toHaveText("loading");
+    // const status = await page.textContent( `[data-testid=${true ? "" : ""}`);
+    const status = await page.textContent('[data-testid="currentMode-false"]');
 
-            //Toggle Clickable Check
-            await page.getByTestId('toggleMode').click();
-            
-            await page.waitForSelector('[data-testid="currentMode"]');
-            //Verification of Current Mode
-            expect(page.getByTestId("currentMode")).toBeVisible;
-            const status = await page.textContent('[data-testid="currentMode"]');
-            
-        
-            if (status){
-                expect(status).toContain("Operational Mode");
-              } else {
-                throw ("The system is now in maintenance mode.");
-              }
-        });
+    if (status) {
+      expect(status).toContain("Current: Operational");
 
-        test('Invalid Fare per Km', async ({ page }) => {   
-            
-            const fareInput = page.getByTestId('fareInput')
-            const notification = page.locator('div.rnc__notification-message:has-text("Invalid fare value")')
+      console.log("The system is now in operational mode.");
+    } else {
+      throw "The system is now in maintenance mode.";
+    }
+  });
 
-            await fareInput.isVisible();
-            await fareInput.fill('0');
-            await page.getByTestId('updateFare').click();
-            await expect(notification).toHaveText("Invalid fare value");
+  test("Invalid Fare per Km", async ({ page }) => {
+    const fareInput = page.getByTestId("fareInput");
+    const notification = page.locator(
+      'div.rnc__notification-message:has-text("Invalid fare value")'
+    );
 
-        });
-        
+    await fareInput.isVisible();
+    await fareInput.fill("0");
+    await page.getByTestId("updateFare").click();
+    await expect(notification).toHaveText("Invalid fare value");
+  });
 
-        test('Valid Fare per Km', async ({ page }) => {   
-            
-            const fareInput = page.getByTestId('fareInput')
-            const notification = page.locator('div.rnc__notification-message:has-text("Fare Rate is now 50")')
+  test("Valid Fare per Km", async ({ page }) => {
+    const fareInput = page.getByTestId("fareInput");
+    const notification = page.locator(
+      'div.rnc__notification-message:has-text("Fare Rate is now 50")'
+    );
 
-            await fareInput.isVisible();
-            await fareInput.fill('50');
-            await page.getByTestId('updateFare').click();
-            await expect(notification).toHaveText("Fare Rate is now 50");
-            
-        
-        });
-
+    await fareInput.isVisible();
+    await fareInput.fill("50");
+    await page.getByTestId("updateFare").click();
+    await expect(notification).toHaveText("Fare Rate is now 50");
+  });
 });
-

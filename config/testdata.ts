@@ -44,3 +44,14 @@ export const invalidCardDetails = {
   uuid: "1231231231",
   balance: "0",
 };
+
+export const transactCardDetails = {
+
+  uuid: "1231231231231230",
+  startingStation: "Kamuning Station",
+  endingStation: "Boni Station",
+  startingBalance: "6847",
+  totalDistance: "7.40",
+  totalCharge: "383",
+  newBalance: "6464",
+};
