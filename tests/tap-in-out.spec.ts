@@ -29,7 +29,7 @@ test.describe("Positive Tap in test with UUID textbox, Tap in button, and detail
       //Expects the geolocation map to be fully visible
       await expect(page.getByTestId("MapLeafTest")).toBeVisible();
 
-      // Fills up Beep Card textbox if it is visible //Add checker that text fields only has number inside
+      // Fills up Beep Card textbox if it is visible
       if (await beepCardTextbox.isVisible()) {
         await beepCardTextbox.click();
         await beepCardTextbox.fill(transactCardDetails.uuid);
@@ -111,7 +111,7 @@ test.describe("Positive Tap out test with UUID textbox, Tap out button, and deta
       //Expects the geolocation map to be fully visible
       await expect(page.getByTestId("MapLeafTest")).toBeVisible();
 
-      // Fills up Tap in Beep Card textbox if it is visible //Add checker that text fields only has number inside
+      // Fills up Tap in Beep Card textbox if it is visible
       if (await beepCardTextbox.isVisible()) {
         await beepCardTextbox.click();
         await beepCardTextbox.fill(transactCardDetails.uuid);
