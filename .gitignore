@@ -132,3 +132,7 @@ dist
 # User and Admin Token
 admin.json
 user.json
+
+# Test Result
+
+test-results
