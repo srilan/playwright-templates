@@ -1,0 +1,6 @@
+{
+    "testCase1": {
+        "inputs": "data-100",
+        "expectedResults": "$ 171.23"
+    }
+}
